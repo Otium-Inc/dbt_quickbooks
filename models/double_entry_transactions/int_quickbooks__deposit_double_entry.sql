@@ -16,6 +16,7 @@ deposit_lines as (
     from {{ref('stg_quickbooks__deposit_line')}}
 ),
 
+/*
 accounts as (
     select *
     from {{ ref('stg_quickbooks__account') }}
@@ -32,6 +33,7 @@ uf_accounts as (
         --and is_active
         --and not is_sub_account
 ),
+*/
 
 deposit_join as (
     select
@@ -40,14 +42,15 @@ deposit_join as (
         deposits.transaction_date,
         deposit_lines.amount,
         deposits.account_id as deposit_to_acct_id,
-        coalesce(deposit_lines.deposit_account_id, uf_accounts.account_id) as deposit_from_acct_id,
+        deposit_lines.deposit_account_id as deposit_from_acct_id,
+        --coalesce(deposit_lines.deposit_account_id, uf_accounts.account_id) as deposit_from_acct_id,
         deposit_customer_id as customer_id
     from deposits
     
     inner join deposit_lines 
         on deposits.deposit_id = deposit_lines.deposit_id
     
-    cross join uf_accounts
+    --cross join uf_accounts
 
 ),
 
