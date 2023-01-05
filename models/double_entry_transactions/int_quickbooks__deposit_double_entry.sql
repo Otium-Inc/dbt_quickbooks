@@ -25,10 +25,12 @@ uf_accounts as (
     select
         account_id
     from accounts
+    where name = 'Undeposited Funds'
+        and account_number = '1410'
 
-    where account_sub_type = 'UndepositedFunds'
-        and is_active
-        and not is_sub_account
+    --where account_sub_type = 'UndepositedFunds'
+        --and is_active
+        --and not is_sub_account
 ),
 
 deposit_join as (
